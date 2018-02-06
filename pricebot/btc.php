@@ -71,7 +71,25 @@ $cmd_client->registerCommand('btc', function ($message) {
     $msg = 
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
-    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL..
+    ' BFFurture1| '.
+    sprintf('%-10s', number_format($last['BFF1'])).'| '.
+    sprintf('%-10s', number_format($ask['BFF1'])).'| '.
+    sprintf('%-10s', number_format($bid['BFF1'])).'| '.
+    sprintf('%-10s', number_format($vol['BFF1'])).
+    PHP_EOL.
+    ' BFFurture2| '.
+    sprintf('%-10s', number_format($last['BFF2'])).'| '.
+    sprintf('%-10s', number_format($ask['BFF2'])).'| '.
+    sprintf('%-10s', number_format($bid['BFF2'])).'| '.
+    sprintf('%-10s', number_format($vol['BFF2'])).
+    PHP_EOL
+    ' bitFlyerFX| '.
+    sprintf('%-10s', number_format($last['BFFX'])).'| '.
+    sprintf('%-10s', number_format($ask['BFFX'])).'| '.
+    sprintf('%-10s', number_format($bid['BFFX'])).'| '.
+    sprintf('%-10s', number_format($vol['BFFX'])).
+    PHP_EOL.
     ' ZAIF      | '.
     sprintf('%-10s', number_format($last['ZAIF'])).'| '.
     sprintf('%-10s', number_format($ask['ZAIF'])).'| '.
@@ -89,24 +107,6 @@ $cmd_client->registerCommand('btc', function ($message) {
     sprintf('%-10s', number_format($ask['BF'])).'| '.
     sprintf('%-10s', number_format($bid['BF'])).'| '.
     sprintf('%-10s', number_format($vol['BF'])).
-    PHP_EOL.
-    ' bitFlyerFX| '.
-    sprintf('%-10s', number_format($last['BFFX'])).'| '.
-    sprintf('%-10s', number_format($ask['BFFX'])).'| '.
-    sprintf('%-10s', number_format($bid['BFFX'])).'| '.
-    sprintf('%-10s', number_format($vol['BFFX'])).
-    PHP_EOL.
-    ' BFFurture1| '.
-    sprintf('%-10s', number_format($last['BFF1'])).'| '.
-    sprintf('%-10s', number_format($ask['BFF1'])).'| '.
-    sprintf('%-10s', number_format($bid['BFF1'])).'| '.
-    sprintf('%-10s', number_format($vol['BFF1'])).
-    PHP_EOL.
-    ' BFFurture2| '.
-    sprintf('%-10s', number_format($last['BFF2'])).'| '.
-    sprintf('%-10s', number_format($ask['BFF2'])).'| '.
-    sprintf('%-10s', number_format($bid['BFF2'])).'| '.
-    sprintf('%-10s', number_format($vol['BFF2'])).
     PHP_EOL;
 
     return PHP_EOL . '```js' . PHP_EOL . $msg . '```' . PHP_EOL;
