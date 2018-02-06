@@ -71,7 +71,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     $msg = 
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
-    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL..
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' BFFurture1| '.
     sprintf('%-10s', number_format($last['BFF1'])).'| '.
     sprintf('%-10s', number_format($ask['BFF1'])).'| '.
@@ -83,7 +83,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     sprintf('%-10s', number_format($ask['BFF2'])).'| '.
     sprintf('%-10s', number_format($bid['BFF2'])).'| '.
     sprintf('%-10s', number_format($vol['BFF2'])).
-    PHP_EOL
+    PHP_EOL.
     ' bitFlyerFX| '.
     sprintf('%-10s', number_format($last['BFFX'])).'| '.
     sprintf('%-10s', number_format($ask['BFFX'])).'| '.
