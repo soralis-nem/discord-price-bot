@@ -45,7 +45,7 @@ $cmd_client->registerCommand('xem', function ($message) {
     }
    //sprintf('%.3f',$last['CP'])
     $msg_BTC = 
-    'XRP/BTC'.PHP_EOL.
+    'XEM/BTC'.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
@@ -62,7 +62,7 @@ $cmd_client->registerCommand('xem', function ($message) {
     sprintf('%-10s', number_format($vol['ZAB'])).
     PHP_EOL;
     $msg_JPY =
-    'XRP/JPY BTC = '.sprintf('%-10s', number_format($BTC_JPY)).PHP_EOL.
+    'XEM/JPY BTC = '.sprintf('%-10s', number_format($BTC_JPY)).PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
