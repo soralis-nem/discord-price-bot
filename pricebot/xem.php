@@ -1,6 +1,6 @@
 <?php
 
-$cmd_client->registerCommand('xrp', function ($message) {
+$cmd_client->registerCommand('xem', function ($message) {
     $urls = [];
     $urls['ZA'] = 'https://api.zaif.jp/api/1/ticker/xem_jpy'; // Zaif
     $urls['ZAB'] = 'https://api.zaif.jp/api/1/ticker/xem_btc'; // Zaif
