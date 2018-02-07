@@ -9,6 +9,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     $urls['ZAIF'] = 'https://api.zaif.jp/api/1/ticker/btc_jpy'; //zaif
     $urls['CC'] = 'https://coincheck.com/api/ticker'; // CoinCheck
     $urls['BFIN'] = 'https://api.bitfinex.com/v1/pubticker/btcusd';
+    $urls['USD'] = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDJPY,CNYJPY%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
     $mh = curl_multi_init();
     $chs = [];
     foreach ($urls as $name => $url) {
@@ -24,8 +25,11 @@ $cmd_client->registerCommand('btc', function ($message) {
     $ask = [];
     $bid = [];
     $vol = [];
+    $USD_JPY = 110;
+    $CNY_JPY 110;
     foreach ($chs as $name => $ch) {
         $res = json_decode(curl_multi_getcontent($ch));
+
         switch ($name) {
             case 'BFFX': // bitFlyerFX
             case 'BF': // bitFlyer
@@ -54,6 +58,10 @@ $cmd_client->registerCommand('btc', function ($message) {
                 $bid[$name] = $res->bid;
                 $vol[$name] = $res->volume;
             break;
+            case 'USD': // Yahoo Finance
+                $USD_JPY = $res->query->results->rate[0]->Rate;
+                $CNY_JPY = $res->query->results->rate[1]->Rate;
+            break;
         }
     }
    
@@ -61,6 +69,13 @@ $cmd_client->registerCommand('btc', function ($message) {
     'BTC/JPY'.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
+    ' bitfinex  | '.
+    sprintf('%-10s', number_format($last['BFIN']*$USD_JPY)).'| '.
+    sprintf('%-10s', number_format($ask['BFIN']*$USD_JPY)).'| '.
+    sprintf('%-10s', number_format($bid['BFIN']*$USD_JPY)).'| '.
+    sprintf('%-10s', number_format($vol['BFIN']*$USD_JPY)).
+    PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' BFFurture1| '.
     sprintf('%-10s', number_format($last['BFF1'])).'| '.
@@ -80,6 +95,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     sprintf('%-10s', number_format($bid['BFFX'])).'| '.
     sprintf('%-10s', number_format($vol['BFFX'])).
     PHP_EOL.
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' ZAIF      | '.
     sprintf('%-10s', number_format($last['ZAIF'])).'| '.
     sprintf('%-10s', number_format($ask['ZAIF'])).'| '.
@@ -100,7 +116,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     PHP_EOL;
 
     $msg_usd = 
-    'BTC/JPY'.PHP_EOL.
+    'BTC/USD'.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
