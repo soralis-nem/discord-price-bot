@@ -26,7 +26,6 @@ $cmd_client->registerCommand('xem', function ($message) {
         switch ($name) {
             case 'ZA': // Zaif
             case 'ZAB': // Zaif
-            $res = $res->data;
                 $last[$name] = $res->last;
                 $ask[$name] = $res->ask;
                 $bid[$name] = $res->bid;
