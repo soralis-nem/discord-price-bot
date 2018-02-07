@@ -8,6 +8,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     $urls['BFF2'] = 'https://api.bitflyer.jp/v1/ticker?product_code=BTCJPY_MAT2WK'; // bitFlyer 先物2
     $urls['ZAIF'] = 'https://api.zaif.jp/api/1/ticker/btc_jpy'; //zaif
     $urls['CC'] = 'https://coincheck.com/api/ticker'; // CoinCheck
+    $urls['BFIN'] = 'https://api.bitfinex.com/v1/pubticker/btcusd';
     $mh = curl_multi_init();
     $chs = [];
     foreach ($urls as $name => $url) {
@@ -27,28 +28,10 @@ $cmd_client->registerCommand('btc', function ($message) {
         $res = json_decode(curl_multi_getcontent($ch));
         switch ($name) {
             case 'BFFX': // bitFlyerFX
-                $last[$name] = $res->ltp;
-                $ask[$name] = $res->best_ask;
-                $bid[$name] = $res->best_bid;
-                $vol[$name] = $res->volume_by_product;
-            break;
             case 'BF': // bitFlyer
-                $last[$name] = $res->ltp;
-                $ask[$name] = $res->best_ask;
-                $ask[$name] = $res->best_ask;
-                $bid[$name] = $res->best_bid;
-                $vol[$name] = $res->volume_by_product;
-            break;
             case 'BFF1': // bitFlyer先物1
-                $last[$name] = $res->ltp;
-                $ask[$name] = $res->best_ask;
-                $ask[$name] = $res->best_ask;
-                $bid[$name] = $res->best_bid;
-                $vol[$name] = $res->volume_by_product;
-            break;
             case 'BFF2': // bitFlyer先物2
                 $last[$name] = $res->ltp;
-                $ask[$name] = $res->best_ask;
                 $ask[$name] = $res->best_ask;
                 $bid[$name] = $res->best_bid;
                 $vol[$name] = $res->volume_by_product;
@@ -65,10 +48,17 @@ $cmd_client->registerCommand('btc', function ($message) {
                 $bid[$name] = $res->bid;
                 $vol[$name] = $res->volume;
             break;
+            case 'BFIN': // Bitninex
+                $last[$name] = $res->last_price;
+                $ask[$name] = $res->ask;
+                $bid[$name] = $res->bid;
+                $vol[$name] = $res->volume;
+            break;
         }
     }
    
-    $msg = 
+    $msg_jpy = 
+    'BTC/JPY'.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
@@ -109,7 +99,20 @@ $cmd_client->registerCommand('btc', function ($message) {
     sprintf('%-10s', number_format($vol['BF'])).
     PHP_EOL;
 
-    return PHP_EOL . '```js' . PHP_EOL . $msg . '```' . PHP_EOL;
+    $msg_usd = 
+    'BTC/JPY'.PHP_EOL.
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
+    ' name      | last      | ask       | bid       | vol       '.PHP_EOL.
+    '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
+    ' bitfinex  | '.
+    sprintf('%-10s', number_format($last['BFIN'])).'| '.
+    sprintf('%-10s', number_format($ask['BFIN'])).'| '.
+    sprintf('%-10s', number_format($bid['BFIN'])).'| '.
+    sprintf('%-10s', number_format($vol['BFIN'])).
+    PHP_EOL;
+
+    return  PHP_EOL . '```js' . PHP_EOL . $msg_jpy . '```' .
+            PHP_EOL . '```js' . PHP_EOL . $msg_usd . '```';
 }, 
 ['description' => 'BTC価格を表示します。', ]
 );
