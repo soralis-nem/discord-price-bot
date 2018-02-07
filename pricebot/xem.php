@@ -60,7 +60,7 @@ $cmd_client->registerCommand('xrp', function ($message) {
     sprintf('%.8f', $last['ZAB']).'| '.
     sprintf('%.8f', $ask['ZAB']).'| '.
     sprintf('%.8f', $bid['ZAB']).'| '.
-    sprintf('%-10s', number_format($vol['ZAB']).
+    sprintf('%-10s', number_format($vol['ZAB'])).
     PHP_EOL;
     $msg_JPY =
     'XRP/JPY BTC = '.sprintf('%-10s', number_format($BTC_JPY)).PHP_EOL.
