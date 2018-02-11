@@ -11,6 +11,8 @@ $cmd_client = new DiscordCommandClient([
 	'prefix' => $config->prefix, 
 ]);
 
+include __DIR__.'/func/getrate.php';
+
 include __DIR__.'/pricebot/btc.php';
 include __DIR__.'/pricebot/bch.php';
 

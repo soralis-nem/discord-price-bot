@@ -1,6 +1,9 @@
 <?php
 
 $cmd_client->registerCommand('btc', function ($message) {
+    $USD_JPY = 0;
+    get_rate($USD_JPY);
+    
     $urls = [];
     $urls['BFFX'] = 'https://api.bitflyer.jp/v1/ticker?product_code=FX_BTC_JPY'; // bitFlyerFX
     $urls['BF'] = 'https://api.bitflyer.jp/v1/ticker?product_code=BTC_JPY'; // bitFlyer
@@ -9,7 +12,6 @@ $cmd_client->registerCommand('btc', function ($message) {
     $urls['ZAIF'] = 'https://api.zaif.jp/api/1/ticker/btc_jpy'; //zaif
     $urls['CC'] = 'https://coincheck.com/api/ticker'; // CoinCheck
     $urls['BFIN'] = 'https://api.bitfinex.com/v1/pubticker/btcusd';
-    $urls['USD'] = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDJPY,CNYJPY%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
     $mh = curl_multi_init();
     $chs = [];
     foreach ($urls as $name => $url) {
@@ -25,8 +27,6 @@ $cmd_client->registerCommand('btc', function ($message) {
     $ask = [];
     $bid = [];
     $vol = [];
-    $USD_JPY = 110;
-    $CNY_JPY 110;
     foreach ($chs as $name => $ch) {
         $res = json_decode(curl_multi_getcontent($ch));
 
@@ -57,10 +57,6 @@ $cmd_client->registerCommand('btc', function ($message) {
                 $ask[$name] = $res->ask;
                 $bid[$name] = $res->bid;
                 $vol[$name] = $res->volume;
-            break;
-            case 'USD': // Yahoo Finance
-                $USD_JPY = $res->query->results->rate[0]->Rate;
-                $CNY_JPY = $res->query->results->rate[1]->Rate;
             break;
         }
     }
