@@ -70,7 +70,7 @@ $cmd_client->registerCommand('btc', function ($message) {
     sprintf('%-10s', number_format($last['BFIN']*$USD_JPY)).'| '.
     sprintf('%-10s', number_format($ask['BFIN']*$USD_JPY)).'| '.
     sprintf('%-10s', number_format($bid['BFIN']*$USD_JPY)).'| '.
-    sprintf('%-10s', number_format($vol['BFIN']*$USD_JPY)).
+    sprintf('%-10s', number_format($vol['BFIN'])).
     PHP_EOL.
     '-----------+-----------+-----------+-----------+-----------'.PHP_EOL.
     ' BFFurture1| '.
